@@ -26,7 +26,7 @@ jobs:
         uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
         with:
           registry: finsharkserver.azurecr.io
-          username: ${{ env.AZURE_CONTAINER_REGISTRY_USERNAME }}
+          username: ${{ secrets.AZURE_CONTAINER_REGISTRY_USERNAME }}
           password: ${{ secrets.AZURE_CONTAINER_REGISTRY_PASSWORD }}
 
       - name: Lowercase the repo name and username
@@ -46,7 +46,7 @@ jobs:
   #   needs: build
   #   environment:
   #     name: 'Development'
-  #     url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+  #     url: {{ steps.deploy-to-webapp.outputs.webapp-url }}
   #   steps:
   #   - name: Lowercase the repo name and username
   #     run: echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
@@ -54,6 +54,6 @@ jobs:
   #     id: deploy-to-webapp
   #     uses: azure/webapps-deploy@v2
   #     with:
-  #       app-name: ${{ env.AZURE_WEBAPP_NAME }}
-  #       publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-  #       images: 'pokemonserver.azurecr.io/${{ env.REPO }}:${{ github.sha }}'
+  #       app-name: {{ env.AZURE_WEBAPP_NAME }}
+  #       publish-profile: {{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+  #       images: 'pokemonserver.azurecr.io/{{ env.REPO }}:{{ github.sha }}'
